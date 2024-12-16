@@ -8,6 +8,11 @@ class Utils:
     def generate_random_string(length=8):
         """Generate a random alphanumeric string."""
         return ''.join(random.choices("abcdefghijklmnopqrstuvwxyz0123456789", k=length))
+    
+    @staticmethod
+    def generate_random_digits(length=8):
+        """Generate a random alphanumeric string."""
+        return ''.join(random.choices("0123456789", k=length))
 
     @staticmethod
     def generate_uuid():
